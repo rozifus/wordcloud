@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Wordcloud</title>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            body {
+                background: #011101;
+                margin: 0;
+                overflow: hidden;
+		        font-family:'Arial', 'Helvetica', 'sans-serif';
+                }
+            #typetonav {
+                position: absolute;
+                z-index: 10000;
+                bottom: 60px;
+                left: 40%;
+                 /* For IE8 and earlier */
+            }
+            #typetonav_input  {
+                display: inline-block;
+                border:none;
+                color:#48b5f2;
+                font-weight: bold;
+                height: 25px;
+                padding:3px;
+                background: rgb(55, 55, 55);
+
+            }
+
+            ::-webkit-input-placeholder {
+            color: #48b5f2;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #48b5f2;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #48b5f2;
+}
+
+:-ms-input-placeholder {
+   color: #48b5f2;
+}
+
+
+            #typetonav_input:focus  {
+
+                outline-color: white;
+            }
+
+
+
+            #typetonav:button{
+                display: inline-block;
+
+
+            }
+
+            #footer{
+                text-align:center;
+                background-color:none;
+                position:absolute;
+                bottom:0px;
+                left:30%;
+                border-radius:20px;
+                padding-left:5px;
+                padding-right:5px;
+                opacity: 0.8;
+                color:#e38d27;
+                font-weight: bold;
+
+                }
+            #footer a{
+
+                color:white;
+
+            }
+            #footer a:visited{
+
+                color:white;
+
+            }
+
+        </style>
+
+        <link rel="stylesheet" type="text/css" href="button.css" />
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> -->
+        <script src="js/jquery.1.9.0.min.js"></script>
+        <script src="js/Three.js"></script>
+        <script src="js/Detector.js"></script>
+        <script src="js/Stats.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="js/CameraControls.js"></script>
+        <script src="js/THREEx.KeyboardState.js"></script>
+        <script src="js/THREEx.FullScreen.js"></script>
+        <script src="js/THREEx.WindowResize.js"></script>
+        <script src="js/BufferGeometryUtils.js"></script>
+        <script src="js/GeometryExporter.js"></script>
+        <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+    </head>
+    <body>
+    <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+    <div id="typetonav">
+        <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
+        <button onclick="wordnav(this)" class="button orange small">Go to Word</button>
+    </div>
+        <div id='footer'><p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz</a>  -- Curious about what this all means? Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>T-SNE</a>  </p></div>
+    <script>
+        document.addEventListener('keypress', function(e) {
+            var active = document.activeElement;
+            if (active.id == "typetonav_input") {
+                e.stopPropagation();
+                if (e.keyCode == 13) {
+                    wordnav();
+                }
+            }
+        }, true);
+            
+        function wordnav() {
+            //var targetword = e.parentElement.firstElementChild.value;
+            var typetonav_input = document.getElementById("typetonav_input");
+            var targetword = typetonav_input.value;
+            console.log(targetword);
+            for (var i=0; i < wordvectors.length; i++) {
+                if (targetword == wordvectors[i].word) {
+                    var success_flag = true;
+                    var wv_coord = wordvectors[i].position;
+                    break;
+                }
+            }
+            if (success_flag) {
+                var new_position = new THREE.Vector3(wv_coord[0]*SCALE_OUT + (targetword.length * fontSize * 0.5),
+                                                     wv_coord[1] * SCALE_OUT,
+                                                     wv_coord[2] * SCALE_OUT + 200);
+                var new_lookat = new THREE.Vector3(new_position.x,
+                                                   new_position.y,
+                                                   new_position.z - 500);
+                camera.position = new_position;
+                controls.center = new_lookat;
+                typetonav_input.blur();
+            } else {
+                alert("Word not found");
+            }
+            typetonav_input.value = '';
+        }
+    </script>
+    <script>
+        // standard global variables
+        var container, scene, camera, renderer, controls, stats;
+        var keyboard = new THREEx.KeyboardState();
+        var clock = new THREE.Clock();
+        // SCENE
+        scene = new THREE.Scene();
+        // CAMERA
+        var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+        var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+        camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+        scene.add(camera);
+        camera.position.set(0,150,400);
+        camera.lookAt(scene.position);
+        // RENDERER
+        if ( Detector.webgl )
+            renderer = new THREE.WebGLRenderer( {antialias:true} );
+        else
+            renderer = new THREE.CanvasRenderer(); 
+        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        container = document.getElementById( 'ThreeJS' );
+        container.appendChild( renderer.domElement );
+        // EVENTS
+        THREEx.WindowResize(renderer, camera);
+        THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+        // CONTROLS
+        controls = new THREE.CameraControls( camera, renderer.domElement );
+        // STATS
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.bottom = '0px';
+        stats.domElement.style.zIndex = 100;
+        container.appendChild( stats.domElement );
+        //// MAKE THE CHARACTER MAP ////
+        var fontSize = 14;
+        // The square letter texture will have 16 * 16 = 256 letters, enough for all 8-bit characters.
+        var lettersPerSide = 16;
+
+        ////////////////////////////////
+
+        //// MAKE THE SIMPLE CHARACTER MAP ////
+        var fontSize2 = 14;
+        var lettersPerSide2 = 26;
+        var c2 = document.createElement('canvas');
+        c2.width = fontSize2 * lettersPerSide2 + fontSize2 * 0.25;
+        c2.height = fontSize2 * 1.5;
+        var ctx2 = c2.getContext('2d');
+        ctx2.font = fontSize+'px Monospace';
+        ctx2.fillStyle = '#011101'; // Anti-aliasing only happens with in-canvas background
+        ctx2.fillRect(0,0,c2.width,c2.height);
+        ctx2.fillStyle = '#0ef20c';
+        for (var i=0; i<lettersPerSide2; i++) {
+            var ch = String.fromCharCode(i+97);
+            //ctx2.fillText(ch, i*fontSize2, fontSize2-fontSize2* yOffset);
+            ctx2.fillText(ch, i * fontSize2 + fontSize2 *0.25,fontSize2);
+        }
+        //document.body.appendChild(c2);
+        var tex2 = new THREE.Texture(c2);
+        tex2.needsUpdate = true;
+
+        ///////////////////////////////
+        var geo = new THREE.Geometry();
+        
+        var v3 = function(x,y,z) {
+          //return new THREE.Vertex(new THREE.Vector3(x,y,z));
+          return new THREE.Vector3(x,y,z);
+        };
+        var line = 0;
+        var i = 0;
+        var x=0;
+        var SCALE_OUT = 200;
+
+        var geo2 = new THREE.Geometry();
+        var side = fontSize2 * 0.5;
+        $(function() {
+            //var data = [{'word': 'foo',
+                         //'position': [2,3,5]},
+                        //{'word': 'b',
+                         //'position': [7,11,13]},
+                        //{'word': 'c',
+                         //'position': [17,19,23]}];
+            //var data = [{"position": [-0.919241112627, 0.0765924861696, -0.0263436285316], "word": "tourcoing"}]
+            $.getJSON('sunday.json', function(data) {
+                wordvectors = data;
+                var word_counter = 1;
+                for (var WORD=0; WORD<data.length; WORD++) {
+            //$.each( data, function( index, wordvector ) {
+                    wordvector = data[WORD];
+                    line = wordvector.position[1] * SCALE_OUT;
+                    wordvec_z = wordvector.position[2] * SCALE_OUT;
+                    for (j=0; j<wordvector.word.length; j++) {
+                        var code = wordvector.word.charCodeAt(j) - 97;
+                        var wordvec_x = wordvector.position[0] * SCALE_OUT + j * side;
+                        //console.log(wordvec_x);
+                        // out-of-bound error handle goes here
+                        var uv_x = code / 26.18 + 0.001;
+                        var uv_y = 0.175;
+                        var boundingbox = 1.0 / lettersPerSide2;
+                //geo2.vertices.push(v3(-fontSize2 * 0.5,fontSize2 * 0.5,0));
+                //geo2.vertices.push(v3(fontSize2 * 0.5,fontSize2 * 0.5,0));
+                //geo2.vertices.push(v3(-fontSize2 * 0.5,-fontSize2 * 0.5,0));
+                //geo2.vertices.push(v3(fontSize2 * 0.5,-fontSize2 * 0.5,0));
+                        ///////////////////////////////////////////////////// 
+                        //geo2.vertices.push(
+                          //v3( (wordvec_x, line, wordvec_z) ),
+                          //v3( (wordvec_x + side, line, wordvec_z) ),
+                          //v3( (wordvec_x, line - side, wordvec_z) ),
+                          //v3( (wordvec_x + side, line - side, wordvec_z) )
+                        //);
+                        // ^^^ The above is mysteriously broken ^^^ //
+                        geo2.vertices.push( v3(wordvec_x, line, wordvec_z) );
+                        geo2.vertices.push( v3(wordvec_x + side, line, wordvec_z) );
+                        geo2.vertices.push( v3(wordvec_x, line - side, wordvec_z) );
+                        geo2.vertices.push( v3(wordvec_x + side, line - side, wordvec_z) );
+                        //console.log("side len: " + side + "  j: " + j);
+                        //console.log("x: " + wordvec_x + " y:" + line + " z:" + wordvec_z);
+                        var face = new THREE.Face3(i*4+0, i*4+2, i*4+1);
+                        var face2 = new THREE.Face3(i*4+2, i*4+3, i*4+1);
+                        geo2.faces.push(face);
+                        geo2.faces.push(face2);
+                        geo2.faceVertexUvs[0].push([
+                          new THREE.Vector2( uv_x, uv_y + 0.75 ), 
+                          new THREE.Vector2( uv_x, uv_y ),
+                          new THREE.Vector2( uv_x + boundingbox, uv_y + 0.75 ) 
+                        ]);
+                        geo2.faceVertexUvs[0].push([
+                          new THREE.Vector2( uv_x, uv_y ), 
+                          new THREE.Vector2( uv_x + boundingbox, uv_y ),
+                          new THREE.Vector2( uv_x + boundingbox, uv_y + 0.75) 
+                        ]);
+                        i++;
+                    }
+                }
+            //
+            simpleMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
+            thirdMaterial = new THREE.MeshBasicMaterial({ map: tex2 });
+            bar = new THREE.Mesh(geo2, thirdMaterial);
+            bar.material.side = THREE.DoubleSide;
+            scene.add( bar );
+            });
+        });
+
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+            update();
+        }
+
+        function update() {
+            controls.update();
+            stats.update();
+        }
+
+        function render() {
+            renderer.render( scene, camera );
+        }
+
+        animate();
+    </script>
+    </body>
+</html>

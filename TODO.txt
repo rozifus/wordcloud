@@ -1,0 +1,9 @@
+TODO
+====
+
+Optimize drawing distant words
+Make far objects brighter
+Add "click object to move to" function
+Closer words are being obscured by further away words
+Camera should rotate around its own location, not its focus
+
