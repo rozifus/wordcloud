@@ -31,7 +31,7 @@ THREE.CameraControls = function ( camera , domElement ) {
     this.userRotateSpeed = 1.0;
 
     this.userPan = true;
-    this.userPanSpeed = 5.0;
+    this.userPanSpeed = 15.0;
 
     this.autoRotate = false;
     this.autoRotateSpeed = 2.0; // 30 seconds per round when fps is 60
