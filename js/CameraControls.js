@@ -247,34 +247,17 @@ THREE.CameraControls = function ( camera , domElement ) {
     function setupMoveTo( x, y ) {
 
         var vector = new THREE.Vector3( ( x / window.innerWidth ) * 2 - 1, - ( y / window.innerHeight ) * 2 + 1, 0.5 );
+
         scope.projector.unprojectVector( vector, camera );
 
         var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
         var intersects = raycaster.intersectObjects( wordobjects );
 
         if ( intersects.length > 0 ) {
 
             wordnav( intersects[0].object.meta.word )
 
-            /*intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-
-            var particle = new THREE.Sprite( particleMaterial );
-            particle.position.copy( intersects[ 0 ].point );
-            particle.scale.x = particle.scale.y = 16;
-            scene.add( particle );
-            */
-
         }
-
-        /*
-        // Parse all the faces
-        for ( var i in intersects ) {
-
-            intersects[ i ].face.material[ 0 ].color.setHex( Math.random() * 0xffffff | 0x80000000 );
-
-        }
-        */
     };
 
     function onMouseDown( event ) {
