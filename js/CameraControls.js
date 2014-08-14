@@ -235,10 +235,18 @@ THREE.CameraControls = function ( camera , domElement ) {
 
         for (var tI = 0; tI < this.tweens.length; tI += 1) {
             var tween = this.tweens[tI];
+
             var otod = tween.destination.clone().sub(tween.origin);
             var step = otod.clone().multiplyScalar(delta/this.tweenTime);
             var distanceToDest = tween.destination.clone().sub(tween.target);
-            if (distanceToDest.length() <= step.length()) {
+
+            if (typeof(tween.delta) == "undefined") {
+                tween.delta = 0;
+            }
+            tween.delta += delta;
+
+            if (distanceToDest.length() <= step.length() ||
+                tween.delta > (1.01 * this.tweenTime)) {
                 tween.target.copy(tween.destination);
                 this.tweens[tI] = null;
             } else {
