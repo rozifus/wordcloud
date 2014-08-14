@@ -3,9 +3,9 @@ TODO
 
 Optimize drawing distant words
 Make far objects brighter
-Add "click object to move to" function
-Closer words are being obscured by further away words
+Closer words are being obscured by further away words, sometimes
 Camera should rotate around word target.
 Camera could also rotate around its own location, not its target
 Add double-click for move-to-word
+Text input should transition like click-move-to-word
 
