@@ -1,12 +1,21 @@
 TODO
 ====
 
-Optimize drawing distant words
-Make far objects brighter
-Closer words are being obscured by further away words, sometimes
-Camera should rotate around word target.
-Camera could also rotate around its own location, not its target
-Add double-click for move-to-word
-Text input should transition like click-move-to-word
-Tween destinations are miscalculating when dev console is open in chrome 
-WSADQE controls are activating while inputting text to search box
+Make far objects brighter, possibly by adding bright faces \
+on the geometry in front of each word and toggling visibility \
+based on distance.
+Improve controls.
+Refactor code.
+
+BUGS
+====
+
+Closer words are being obscured by further away words, sometimes.
+Tween destinations are miscalculating when dev console is open in chrome.
+WSADQE controls are activating while inputting text to search box.
+
+MAYBE
+=====
+
+Add a tiny cursor so users can see their rotation point.
+Single left click for rotation, double left click for move-to-word.
