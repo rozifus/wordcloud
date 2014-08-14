@@ -118,10 +118,12 @@
             }
         }, true);
             
-        function wordnav() {
+        function wordnav( targetword ) {
             //var targetword = e.parentElement.firstElementChild.value;
             var typetonav_input = document.getElementById("typetonav_input");
-            var targetword = typetonav_input.value;
+            if (typeof(targetword) == "undefined") {
+                var targetword = typetonav_input.value;
+            };
             console.log(targetword);
             for (var i=0; i < wordvectors.length; i++) {
                 if (targetword == wordvectors[i].word) {
@@ -230,12 +232,26 @@
             //var data = [{"position": [-0.919241112627, 0.0765924861696, -0.0263436285316], "word": "tourcoing"}]
             $.getJSON('sunday.json', function(data) {
                 wordvectors = data;
+                wordobjects = [];
                 var word_counter = 1;
                 for (var WORD=0; WORD<data.length; WORD++) {
             //$.each( data, function( index, wordvector ) {
                     wordvector = data[WORD];
                     line = wordvector.position[1] * SCALE_OUT;
                     wordvec_z = wordvector.position[2] * SCALE_OUT;
+                    var boxGeo = new THREE.CubeGeometry(wordvector.word.length/2 * fontSize, side, 0.1);
+                    var boxMesh = new THREE.Mesh(boxGeo);
+                    var boxPosition = new THREE.Vector3(wordvector.position[0],
+                                                        wordvector.position[1],
+                                                        wordvector.position[2]);
+                    boxPosition.multiplyScalar( SCALE_OUT );
+                    boxPosition.setX(boxPosition.x + (boxGeo.width / 2))
+                    boxPosition.setY(boxPosition.y - (side / 2))
+                    boxMesh.position = boxPosition;
+                    boxMesh.visible = false;
+                    boxMesh.meta = { word: wordvector.word }
+                    wordobjects.push(boxMesh);
+                    scene.add(boxMesh)
                     for (j=0; j<wordvector.word.length; j++) {
                         var code = wordvector.word.charCodeAt(j) - 97;
                         var wordvec_x = wordvector.position[0] * SCALE_OUT + j * side;
@@ -266,6 +282,7 @@
                         var face2 = new THREE.Face3(i*4+2, i*4+3, i*4+1);
                         geo2.faces.push(face);
                         geo2.faces.push(face2);
+                        wordobjects.push()
                         geo2.faceVertexUvs[0].push([
                           new THREE.Vector2( uv_x, uv_y + 0.75 ), 
                           new THREE.Vector2( uv_x, uv_y ),
