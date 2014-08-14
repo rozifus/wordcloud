@@ -253,11 +253,7 @@ THREE.CameraControls = function ( camera , domElement ) {
 
         var intersects = raycaster.intersectObjects( wordobjects );
 
-        console.log(intersects);
-
         if ( intersects.length > 0 ) {
-
-            console.log("intersects", intersects);
 
             wordnav( intersects[0].object.meta.word )
 
