@@ -8,4 +8,5 @@ Camera should rotate around word target.
 Camera could also rotate around its own location, not its target
 Add double-click for move-to-word
 Text input should transition like click-move-to-word
-
+Tween destinations are miscalculating when dev console is open in chrome 
+WSADQE controls are activating while inputting text to search box

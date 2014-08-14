@@ -16,12 +16,13 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     this.enabled = true;
 
-    this.tween = null;
+    this.tweens = [];
 
     this.center = new THREE.Vector3();
 
     this.tweenTime = 1.5;
-    //this.tweenFrames = 120;
+
+    this.cameraOffset = new THREE.Vector3(0,0,200);
 
     this.userZoom = true;
     this.userZoomSpeed = 1.0;
@@ -40,6 +41,9 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     this.minDistance = 0;
     this.maxDistance = Infinity;
+
+    this.boostMinDist = 0;
+    this.boostMaxDist = 0;
 
     // 65 /*A*/, 83 /*S*/, 68 /*D*/
     this.keys = {
@@ -171,7 +175,7 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     this.update = function () {
 
-        this.updateTween();
+        this.updateTweens();
 
         var position = this.camera.position;
         var offset = position.clone().sub( this.center );
@@ -226,22 +230,23 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     };
 
-    this.updateTween = function() {
-        if (!this.tween) return;
+    this.updateTweens = function() {
+        if (this.tweens.length <= 0) return;
 
-        var otod = this.tween.destination.clone().sub(this.tween.origin);
-        var step = otod.clone().multiplyScalar(delta/this.tweenTime);
-        var distanceToDest = this.tween.destination.clone().sub(this.center);
-        if (distanceToDest.length() <= step.length()) {
-            this.center = new THREE.Vector3().copy(this.tween.destination);
-            this.tween = null;
-            return;
+        for (var tI = 0; tI < this.tweens.length; tI += 1) {
+            var tween = this.tweens[tI];
+            var otod = tween.destination.clone().sub(tween.origin);
+            var step = otod.clone().multiplyScalar(delta/this.tweenTime);
+            var distanceToDest = tween.destination.clone().sub(tween.target);
+            if (distanceToDest.length() <= step.length()) {
+                tween.target.copy(tween.destination);
+                this.tweens[tI] = null;
+            } else {
+                tween.target.add(step);
+            };
         };
 
-        console.log(delta);
-
-        this.center.add(step);
-        this.camera.position.add(step)
+        this.tweens = this.tweens.filter(function(val) { return val != null });
 
     }
 
@@ -270,9 +275,13 @@ THREE.CameraControls = function ( camera , domElement ) {
 
             var wordNode = intersects[0].object
 
-            scope.tween = { origin: new THREE.Vector3().copy(scope.center),
-                            destination: new THREE.Vector3().copy(wordNode.position) }
+            scope.tweens.push({ origin: scope.center.clone(),
+                                destination: wordNode.position.clone(),
+                                target: scope.center });
 
+            scope.tweens.push({ origin: scope.camera.position.clone(),
+                                destination: wordNode.position.clone().add(scope.cameraOffset),
+                                target: scope.camera.position });
             //wordnav( intersects[0].object.meta.word )
 
         }
@@ -282,7 +291,7 @@ THREE.CameraControls = function ( camera , domElement ) {
 
         if ( scope.enabled === false ) return;
         if ( scope.userRotate === false ) return;
-        if ( scope.tween != null ) return;
+        if ( scope.tweens.length > 0 ) return;
 
         event.preventDefault();
 
@@ -375,7 +384,6 @@ THREE.CameraControls = function ( camera , domElement ) {
 
         if ( scope.enabled === false ) return;
         if ( scope.userRotate === false ) return;
-        if ( scope.moveTo != null ) return;
 
         document.removeEventListener( 'mousemove', onMouseMove, false );
         document.removeEventListener( 'mouseup', onMouseUp, false );

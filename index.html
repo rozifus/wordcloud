@@ -91,8 +91,8 @@
         <script src="js/Three.js"></script>
         <script src="js/Detector.js"></script>
         <script src="js/Stats.js"></script>
-        <script src="js/OrbitControls.js"></script>
         <script src="js/CameraControls.js"></script>
+        <script src="js/OrbitControls.js"></script>
         <script src="js/THREEx.KeyboardState.js"></script>
         <script src="js/THREEx.FullScreen.js"></script>
         <script src="js/THREEx.WindowResize.js"></script>
@@ -133,12 +133,21 @@
             if (success_flag) {
                 var new_position = new THREE.Vector3(wv_coord[0]*SCALE_OUT + (targetword.length * fontSize * 0.5),
                                                      wv_coord[1] * SCALE_OUT,
-                                                     wv_coord[2] * SCALE_OUT + 200);
+                                                     wv_coord[2] * SCALE_OUT);
                 var new_lookat = new THREE.Vector3(new_position.x,
                                                    new_position.y,
                                                    new_position.z - 500);
-                camera.position = new_position;
-                controls.center = new_lookat;
+
+                controls.tweens.push({ origin: controls.center.clone(),
+                                       destination: new_position,
+                                       target: controls.center });
+
+                controls.tweens.push({ origin: controls.camera.position.clone(),
+                                       destination: new_position.clone().add(controls.cameraOffset),
+                                       target: controls.camera.position });
+
+                //camera.position = new_position;
+                //controls.center = new_lookat;
                 typetonav_input.blur();
             } else {
                 alert("Word not found");
@@ -232,13 +241,14 @@
                 wordvectors = data;
                 wordobjects = [];
                 var word_counter = 1;
+                var boxMat = new THREE.MeshBasicMaterial({color: 0x0ef20c});
                 for (var WORD=0; WORD<data.length; WORD++) {
             //$.each( data, function( index, wordvector ) {
                     wordvector = data[WORD];
                     line = wordvector.position[1] * SCALE_OUT;
                     wordvec_z = wordvector.position[2] * SCALE_OUT;
                     var boxGeo = new THREE.CubeGeometry(wordvector.word.length/2 * fontSize, side, 0.1);
-                    var boxMesh = new THREE.Mesh(boxGeo);
+                    var boxMesh = new THREE.Mesh(boxGeo, boxMat);
                     var boxPosition = new THREE.Vector3(wordvector.position[0],
                                                         wordvector.position[1],
                                                         wordvector.position[2]);
