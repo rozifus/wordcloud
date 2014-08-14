@@ -1,4 +1,6 @@
 wordcloud
 =========
 
-Word Cloud using t-SNE for Ersatz Labs
+WordCloud using t-SNE for Ersatz Labs
+
+[Try it out!](http://rozifus.github.io/wordcloud/)
