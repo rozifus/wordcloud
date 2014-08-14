@@ -15,11 +15,13 @@ THREE.CameraControls = function ( camera , domElement ) {
     // API
 
     this.enabled = true;
+
     this.tween = null;
 
     this.center = new THREE.Vector3();
 
-    this.tweenTime = 2.0;
+    this.tweenTime = 1.5;
+    //this.tweenFrames = 120;
 
     this.userZoom = true;
     this.userZoomSpeed = 1.0;
@@ -84,10 +86,6 @@ THREE.CameraControls = function ( camera , domElement ) {
     // events
 
     var changeEvent = { type: 'change' };
-
-    this.teleportToWord = function( word ) {
-
-    };
 
     this.rotateLeft = function ( angle ) {
 
@@ -173,10 +171,7 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     this.update = function () {
 
-        if (this.tween) {
-            this.updateTween();
-            return;
-        };
+        this.updateTween();
 
         var position = this.camera.position;
         var offset = position.clone().sub( this.center );
@@ -231,6 +226,24 @@ THREE.CameraControls = function ( camera , domElement ) {
 
     };
 
+    this.updateTween = function() {
+        if (!this.tween) return;
+
+        var otod = this.tween.destination.clone().sub(this.tween.origin);
+        var step = otod.clone().multiplyScalar(delta/this.tweenTime);
+        var distanceToDest = this.tween.destination.clone().sub(this.center);
+        if (distanceToDest.length() <= step.length()) {
+            this.center = new THREE.Vector3().copy(this.tween.destination);
+            this.tween = null;
+            return;
+        };
+
+        console.log(delta);
+
+        this.center.add(step);
+        this.camera.position.add(step)
+
+    }
 
     function getAutoRotationAngle() {
 
@@ -255,7 +268,12 @@ THREE.CameraControls = function ( camera , domElement ) {
 
         if ( intersects.length > 0 ) {
 
-            wordnav( intersects[0].object.meta.word )
+            var wordNode = intersects[0].object
+
+            scope.tween = { origin: new THREE.Vector3().copy(scope.center),
+                            destination: new THREE.Vector3().copy(wordNode.position) }
+
+            //wordnav( intersects[0].object.meta.word )
 
         }
     };

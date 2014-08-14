@@ -152,7 +152,7 @@
         // standard global variables
         var container, scene, camera, renderer, controls, stats;
         var keyboard = new THREEx.KeyboardState();
-        var clock = new THREE.Clock();
+        var clock = new THREE.Clock(), delta = 0.0;
         // SCENE
         scene = new THREE.Scene();
         // CAMERA
@@ -308,6 +308,7 @@
         function animate() {
             requestAnimationFrame( animate );
             render();
+            delta = clock.getDelta();
             update();
         }
 
