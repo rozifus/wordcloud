@@ -7,4 +7,5 @@ Add "click object to move to" function
 Closer words are being obscured by further away words
 Camera should rotate around word target.
 Camera could also rotate around its own location, not its target
+Add double-click for move-to-word
 
