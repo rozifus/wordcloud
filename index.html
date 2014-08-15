@@ -8,8 +8,9 @@
                 background: #011101;
                 margin: 0;
                 overflow: hidden;
-		        font-family:'Arial', 'Helvetica', 'sans-serif';
-                }
+                font-family:'Arial', 'Helvetica', 'sans-serif';
+            }
+
             #typetonav {
                 position: absolute;
                 z-index: 10000;
@@ -17,6 +18,7 @@
                 left: 40%;
                  /* For IE8 and earlier */
             }
+
             #typetonav_input  {
                 display: inline-block;
                 border:none;
@@ -25,37 +27,31 @@
                 height: 25px;
                 padding:3px;
                 background: rgb(55, 55, 55);
-
             }
 
             ::-webkit-input-placeholder {
             color: #48b5f2;
-}
+            }
 
-:-moz-placeholder { /* Firefox 18- */
-   color: #48b5f2;
-}
+            :-moz-placeholder { /* Firefox 18- */
+               color: #48b5f2;
+            }
 
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #48b5f2;
-}
+            ::-moz-placeholder {  /* Firefox 19+ */
+               color: #48b5f2;
+            }
 
-:-ms-input-placeholder {
-   color: #48b5f2;
-}
-
+            :-ms-input-placeholder {
+               color: #48b5f2;
+            }
 
             #typetonav_input:focus  {
 
                 outline-color: white;
             }
 
-
-
             #typetonav:button{
                 display: inline-block;
-
-
             }
 
             #footer{
@@ -70,17 +66,14 @@
                 opacity: 0.8;
                 color:#e38d27;
                 font-weight: bold;
-
-                }
-            #footer a{
-
-                color:white;
-
             }
-            #footer a:visited{
 
+            #footer a{
                 color:white;
+            }
 
+            #footer a:visited{
+                color:white;
             }
 
         </style>
@@ -99,13 +92,13 @@
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
     </head>
     <body>
-    <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-    <div id="typetonav">
-        <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
-        <button onclick="wordnav(this)" class="button orange small">Go to Word</button>
-    </div>
+        <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+            <div id="typetonav">
+                <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
+                <button onclick="wordnav(this)" class="button orange small">Go to Word</button>
+            </div>
         <div id='footer'><p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz</a>  -- Curious about what this all means? Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>T-SNE</a>  </p></div>
-    <script>
+        <script>
         document.addEventListener('keypress', function(e) {
             var active = document.activeElement;
             if (active.id == "typetonav_input") {
