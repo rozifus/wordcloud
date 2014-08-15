@@ -6,6 +6,8 @@ on the geometry in front of each word and toggling visibility \
 based on distance.
 Improve controls.
 Refactor code.
+Non-linear move transitions.
+Make far objects easier to click / create zones for far object clusters.
 
 BUGS
 ====
