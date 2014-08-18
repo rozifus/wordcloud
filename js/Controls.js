@@ -16,6 +16,8 @@ WordCloud.Controls = function ( opts ) {
     this.data = opts.data;
     this.projector = new THREE.Projector();
 
+    var config = this.app.config;
+
     // API
 
     this.enabled = true;
@@ -317,9 +319,9 @@ WordCloud.Controls = function ( opts ) {
             }
         }
         if (success_flag) {
-            var new_position = new THREE.Vector3(wv_coord[0]*SCALE_OUT + (targetword.length * fontSize * 0.5),
-                                                 wv_coord[1] * SCALE_OUT,
-                                                 wv_coord[2] * SCALE_OUT);
+            var new_position = new THREE.Vector3(wv_coord[0] * config.SCALE_OUT + (targetword.length * config.FONT_SIZE * 0.5),
+                                                 wv_coord[1] * config.SCALE_OUT,
+                                                 wv_coord[2] * config.SCALE_OUT);
 
             var new_lookat = new THREE.Vector3(new_position.x,
                                                new_position.y,

@@ -12,5 +12,8 @@ WordCloud.Config = function() {
 
     this.CAMERA_INIT_POSITION = [0, 150, 400];
 
+    this.FONT_SIZE = 14;
+    this.SCALE_OUT = 200;
+
 };
 
