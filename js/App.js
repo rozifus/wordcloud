@@ -23,10 +23,13 @@ WordCloud.App = function (opts) {
     this.clock = new THREE.Clock();
     this.delta = {value: 0.0};
     this.renderer = null;
-    if ( Detector.webgl )
-        this.renderer = new THREE.WebGLRenderer( {antialias:true} );
-    else
+    if ( Detector.webgl ) {
+        this.renderer = new THREE.WebGLRenderer( {clearAlpha:1, antialias:true} );
+        console.log("WebGL")
+    } else {
         this.renderer = new THREE.CanvasRenderer();
+        console.log("Canvas")
+    };
     this.renderer.setSize(this.width, this.height);
     this.container.appendChild( this.renderer.domElement );
 
