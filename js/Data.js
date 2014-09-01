@@ -60,26 +60,27 @@ WordCloud.Data = function (opts) {
     pointMat.color.setHSL( 0.863,0.9,0.9 );
 
     // box stuff
-    var boxMat = new THREE.MeshBasicMaterial({color: 0x0ef20c});
+    var boxMat = new THREE.MeshBasicMaterial( );
+    var planeMat = new THREE.MeshBasicMaterial( { color: 0xFF0000, side: THREE.DoubleSide } );
 
     var pointMode = true;
 
     this.addWord = function(item) {
         line = item.position[1] * SCALE_OUT;
         wordvec_z = item.position[2] * SCALE_OUT;
-        var boxGeo = new THREE.CubeGeometry(item.word.length/2 * fontSize, side, 0.1);
-        var boxMesh = new THREE.Mesh(boxGeo, boxMat);
-        var boxPosition = new THREE.Vector3(item.position[0],
-                                            item.position[1],
-                                            item.position[2]);
-        boxPosition.multiplyScalar( SCALE_OUT );
-        boxPosition.setX(boxPosition.x + (boxGeo.width / 2))
-        boxPosition.setY(boxPosition.y - (side / 2))
-        boxMesh.position = boxPosition;
-        boxMesh.visible = false;
-        boxMesh.meta = { word: item.word }
-        this.clickBoxes.push(boxMesh);
-        this.app.scene.add(boxMesh);
+        var planeGeo = new THREE.PlaneGeometry((item.word.length/2) * fontSize, side);
+        var planeMesh = new THREE.Mesh(planeGeo, planeMat);
+        var planePosition = new THREE.Vector3(item.position[0],
+                                              item.position[1],
+                                              item.position[2]);
+        planePosition.multiplyScalar( SCALE_OUT );
+        planePosition.setX(planePosition.x + (item.word.length/4) * fontSize)
+        planePosition.setY(planePosition.y - (side / 2))
+        planeMesh.position.copy(planePosition);
+        planeMesh.visible = false;
+        planeMesh.meta = { word: item.word }
+        this.clickBoxes.push(planeMesh);
+        this.app.scene.add(planeMesh);
         for (j=0; j<item.word.length; j++) {
             var code = item.word.charCodeAt(j) - 97;
             var wordvec_x = item.position[0] * SCALE_OUT + j * side;
@@ -128,8 +129,8 @@ WordCloud.Data = function (opts) {
         for (var i=0; i<this.items.length; i++) {
             var item = this.items[i];
             if (typeof(item.word) != undefined) {
-                //this.addWord(item);
-                this.addPoint(item);
+                this.addWord(item);
+                //this.addPoint(item);
             } else {
                 this.addPoint(item);
             };
