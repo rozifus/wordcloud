@@ -306,10 +306,10 @@ WordCloud.Controls = function ( opts ) {
     this.wordnav = function ( targetelem ) {
         //var targetword = e.parentElement.firstElementChild.value;
         var typetonav_input = document.getElementById("typetonav_input");
-        console.log(targetelem)
         if (typeof(targetelem) == "undefined") {
             var targetword = typetonav_input.value;
         };
+        targetword = targetword.trim().toLowerCase()
         console.log(targetword);
         for (var i=0; i < this.app.data.items.length; i++) {
             if (targetword == this.app.data.items[i].word) {
