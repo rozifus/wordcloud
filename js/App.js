@@ -49,7 +49,7 @@ WordCloud.App = function (opts) {
 
     this.stats = new Stats();
     this.stats.domElement.style.position = 'absolute';
-    this.stats.domElement.style.bottom = '0px';
+    this.stats.domElement.style.top = '0px';
     this.stats.domElement.style.zIndex = 100;
     this.container.appendChild( this.stats.domElement );
 

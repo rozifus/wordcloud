@@ -95,31 +95,53 @@
 
             }
 
-            #footer{
-                font-family: "OCRA";
-                text-align:center;
-                background-color:none;
-                position:absolute;
-                bottom:10px;
-                right: 15px;
-                line-height: 1.5em;
-                border-radius:20px;
-                padding: 0px;
-                margin: 0px;
-                padding-left:5px;
-                padding-right:5px;
-                opacity: 0.8;
-                color:#e38d27;
-                color: #0C6CF2;
-                color: #0C8BF2;
-                color: #00E6E6;
-                color: #007AE6;
-                color: #168BF2;
+            #controls-modal {
+                border: 1px solid #0ef20c;
                 color: #0ef20c;
-                font-weight: bold;
+                background: #011101;
+                padding: 2em;
+                z-index: 500;
+                position: relative;
+                left: -50%;
+                top: 5em;
             }
 
-            #footer p {
+            #controls-modal-wrapper {
+                position:fixed;
+                left:50%;
+            }
+
+            .ocra-text {
+                background-color:none;
+                text-align: center;
+                font-family: "OCRA", "Monospace", "sans-serif";
+                color: #0ef20c;
+                font-weight: bold;
+                line-height: 1.5em;
+                position: absolute;
+                padding: 0px;
+                margin: 0px;
+                padding-left: 5px;
+                padding-right: 5px;
+                opacity: 0.8;
+            }
+
+            #stats #fps #fpsText {
+                color: #0ef20c;
+                left: 100px;
+            }
+
+            #header {
+                left: 15px;
+                bottom: 10px;
+            }
+
+            #footer{
+                bottom:10px;
+                right: 15px;
+            }
+
+            .ocra-text p {
                 margin: 0px;
                 padding: 0px;
             }
@@ -155,12 +177,63 @@
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
     </head>
     <body>
+        <!--
+        <div id="controls-modal-wrapper">
+        <div id="controls-modal">
+            <h3>Controls</h4>
+            <table>
+              <tr>
+                <th>Action</th>
+                <th>Button</td>
+              </tr>
+              <tr>
+                <th>Forward</th>
+                <td>W</td>
+              </tr>
+              <tr>
+                <th>Backward</th>
+                <td>S</td>
+              </tr>
+              <tr>
+                <th>Left</th>
+                <td>A</td>
+              </tr>
+              <tr>
+                <th>Right</th>
+                <td>D</td>
+              </tr>
+              <tr>
+                <th>Up</th>
+                <td>E</td>
+              </tr>
+              <tr>
+                <th>Down</th>
+                <td>Q</td>
+              </tr>
+              <tr>
+                <th>Move to Word</th>
+                <td>Left Click a Word </td>
+              </tr>
+              <tr>
+                <th>Rotate Camera</th>
+                <td>Hold Right Click and Move Mouse</td>
+              </tr>
+              <tr>
+                <th>Zoom Camera</th>
+                <td>Scroll Wheel</td>
+              </tr>
+            </table>
+            <input class="button search" value="Ok" />
+        </div>
+        </div>
+        -->
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+        <div id="header" class="ocra-text"><p>Click on a word to fly to it.<br /> WASDQE to fly around.<br /> Right click and drag to rotate.</p></div>
             <div id="typetonav">
                 <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
                 <button onclick="instance.controls.wordnav()" class="button search orange small">Search</button>
             </div>
-            <div id='footer'><p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz Labs</a><br />Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>t-SNE</a>  </p></div>
+            <div id='footer' class="ocra-text"><p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz Labs</a><br />Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>t-SNE</a>  </p></div>
         <script>
             var instance = new WordCloud.App({container:"ThreeJS"});
             instance.start();
