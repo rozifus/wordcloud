@@ -27,6 +27,7 @@ WordCloud.Data = function (opts) {
     var ctx = charMap.getContext('2d');
     ctx.font = fontSize+'px Monospace';
     ctx.fillStyle = '#011101'; // Anti-aliasing only happens with in-canvas background
+    ctx.fillStyle = '#010A01';
     ctx.fillRect(0,0,charMap.width,charMap.height);
     ctx.fillStyle = '#0ef20c';
     for (var i=0; i<lettersPerSide; i++) {

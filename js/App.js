@@ -30,6 +30,7 @@ WordCloud.App = function (opts) {
         this.renderer = new THREE.CanvasRenderer();
         console.log("Canvas")
     };
+    this.renderer.setClearColor('#010A01',1);
     this.renderer.setSize(this.width, this.height);
     this.container.appendChild( this.renderer.domElement );
 
