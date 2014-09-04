@@ -136,6 +136,11 @@
                 bottom: 10px;
             }
 
+            #ersatz-demos{
+                top: 10px;
+                left: 15px;
+            }
+
             #footer{
                 bottom:10px;
                 right: 15px;
@@ -146,7 +151,7 @@
                 padding: 0px;
             }
 
-            #footer a{
+            .ocra-text a{
                 color:white;
                 color: #168BF2;
                 color:#16A3FC;
@@ -228,12 +233,24 @@
         </div>
         -->
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-        <div id="header" class="ocra-text"><p>Click on a word to fly to it.<br /> WASDQE to fly around.<br /> Right click and drag to rotate.</p></div>
-            <div id="typetonav">
-                <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
-                <button onclick="instance.controls.wordnav()" class="button search orange small">Search</button>
-            </div>
-            <div id='footer' class="ocra-text"><p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz Labs</a><br />Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>t-SNE</a>  </p></div>
+        <div id="ersatz-demos" class="ocra-text">
+            <p><a href="http://www.ersatzlabs.com/demos/">&lt; Ersatz Labs Demos</a></p>
+        </div>
+        <div id="header" class="ocra-text">
+            <p>Click on a word to fly to it.<br /> 
+               WASDQE to move freely.<br /> 
+               Right click and drag to rotate.
+            </p>
+        </div>
+        <div id="typetonav">
+            <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
+            <button onclick="instance.controls.wordnav()" class="button search orange small">Search</button>
+        </div>
+        <div id='footer' class="ocra-text">
+            <p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz Labs</a><br />
+               Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>t-SNE</a>  
+           </p>
+       </div>
         <script>
             var instance = new WordCloud.App({container:"ThreeJS"});
             instance.start();
