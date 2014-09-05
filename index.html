@@ -37,6 +37,7 @@
             #typetonav_input  {
                 display: inline-block;
                 color: #0BBF09;
+                color: #078006;
                 font-weight: bold;
                 height: 25px;
                 width: 14em;
@@ -47,24 +48,29 @@
                 border:none;
             }
             
-            #typetonav_input.word-not-found  {
-                color: #0BBF09;
-            }
-
             ::-webkit-input-placeholder {
                 color: #0BBF09;
+                color: #078006;
             }
 
             :-moz-placeholder { /* Firefox 18- */
                 color: #0BBF09;
+                color: #078006;
             }
 
             ::-moz-placeholder {  /* Firefox 19+ */
                 color: #0BBF09;
+                color: #078006;
             }
 
             :-ms-input-placeholder {
                 color: #0BBF09;
+                color: #078006;
+            }
+
+            #typetonav_input.word-not-found  {
+                color: #0BBF09;
+                color: #E13418;
             }
 
             .word-not-found::-webkit-input-placeholder {
@@ -136,37 +142,38 @@
             }
 
             #menu {
-                top: 0.1em;
+                top: 0.5em;
                 left: 0.5em;
+                padding: 0px;
+                padding-left:2px;
+                margin: 0px;
                 position: absolute;
-                width: 100%;
+                border: 1px solid #0ef20c;
             }
             
-            #menu button {
+            #menu a {
                 float: left;
-                margin: 0.4em;
-                margin-right:0.4em;
-                margin-left:0em;
+                margin: 2px;
+                margin-left:0px;
                 padding: 0.3em;
                 padding-left: 0.5em;
                 padding-right: 0.5em;
                 cursor: pointer;
                 background: #011101;
-                border: 1px solid #0ef20c;
-                border: none;
                 background: #0ef20c;
                 color: #0ef20c;
                 color: #011101;
+                text-decoration: none;
             }
 
-            #menu button:hover {
+            #menu a:hover {
                 background: #00F289;
                 background: #4DFFB1;
                 background: #0B9EE6;
                 background: #12A611;
             }
 
-            #menu button#ersatz-link-button{
+            #menu .ersatz-link {
                 color: #16A3FC;
                 border: 1px solid #16A3FC;
                 border: none;
@@ -174,7 +181,7 @@
                 color: #011101;
             }
             
-            #menu button#ersatz-link-button:hover {
+            #menu .ersatz-link:hover {
                 background: #16A3FC;
                 background: #116CA6;
             }
@@ -345,10 +352,8 @@
         </div>
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
         <div id="menu">
-            <form id="ersatz-link" action="http://www.ersatzlabs.com/demos/#techdemos">
-                <button id="ersatz-link-button" class="ocra-text button">&lt; Ersatz Labs Demos</button>
-            </form>
-            <button id="toggle-controls" class="ocra-text button">Controls</button>
+            <a class="ersatz-link ocra-text button" href="http://www.ersatzlabs.com/demos/#techdemos">&lt; Ersatz Labs Demos</a>
+            <a id="toggle-controls" class="ocra-text button">Controls</a>
         </div>
         <!--
         <div id="header" class="ocra-text panel">
@@ -359,7 +364,7 @@
         </div>
         -->
         <div id="typetonav">
-            <input id="typetonav_input" class="ocra-text" type="text" placeholder="Enter Target Word"></input>
+            <input id="typetonav_input" class="ocra-text" type="text" placeholder="Target Word.."></input>
             <button id="typetonav-button" onclick="instance.controls.wordnav()" class="ocra-text button highlight">Search</button>
         </div>
         <div id='footer' class="ocra-text panel">
@@ -372,11 +377,11 @@
             instance.start();
 
             $("#typetonav_input").focus(function() {
-                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Enter Target Word")
+                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Target Word..")
             });
 
-            $("#typetonav_input").change(function() {
-                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Enter Target Word")
+            $("#typetonav_input").keydown(function() {
+                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Target Word..")
             });
             
             $("#close-controls").click(function() {
