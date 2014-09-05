@@ -12,18 +12,21 @@
             body {
                 background: #011101;
                 background: #010A01;
-                margin: 0;
+                margin: 0px;
+                padding: 0px;
                 overflow: hidden;
                 font-family:'Monospace', 'Arial', 'Helvetica', 'sans-serif';
             }
 
             #typetonav {
+                font-family: "OCRA", 'Monospace', 'Arial', 'Helvetica', 'sans-serif';
                 position: absolute;
                 z-index: 10000;
-                bottom: 15px;
-                left: 37%;
+                left: 0px;
+                bottom: 0px;
                 padding: 1px;
                 margin: auto;
+                margin: 0.7em;
                  /* For IE8 and earlier */
                 border: 1px solid #011101;
                 border: 1px solid #0ef20c;
@@ -33,66 +36,87 @@
 
             #typetonav_input  {
                 display: inline-block;
-                color:#48b5f2;
-                color:#0ef20c;
                 color: #0BBF09;
                 font-weight: bold;
                 height: 25px;
-                width: 12em;
+                width: 14em;
                 padding:3px;
                 text-align: center;
                 background: rgb(55, 55, 55);
                 background: #011101;
                 border:none;
             }
+            
+            #typetonav_input.word-not-found  {
+                color: #0BBF09;
+            }
 
             ::-webkit-input-placeholder {
-            color: #48b5f2;
-            color:#0ef20c;
                 color: #0BBF09;
             }
 
             :-moz-placeholder { /* Firefox 18- */
-               color: #48b5f2;
-               color:#0ef20c;
                 color: #0BBF09;
             }
 
             ::-moz-placeholder {  /* Firefox 19+ */
-               color: #48b5f2;
-               color:#0ef20c;
                 color: #0BBF09;
             }
 
             :-ms-input-placeholder {
-               color: #48b5f2;
-               color:#0ef20c;
                 color: #0BBF09;
+            }
+
+            .word-not-found::-webkit-input-placeholder {
+                color: #E13418;
+            }
+
+            .word-not-found:-moz-placeholder { /* Firefox 18- */
+                color: #E13418;
+            }
+
+            .word-not-found::-moz-placeholder {  /* Firefox 19+ */
+                color: #E13418;
+            }
+
+            .word-not-found:-ms-input-placeholder {
+                color: #E13418;
             }
 
             #typetonav_input:focus  {
 
-                outline-color: white;
                 outline-color: transparent;
             }
 
-            .button.search{
-                display: inline-block;
-                color: #0ef20c;
-                color: #011101;
+            .button {
+                z-index: 10000;
+                font-size: 1.02em;
+                font-weight: bold;
+                border: none;
+                /*cursor: "pointer";*/
+                margin: 1px;
                 padding: 5px;
                 padding-left: 1em;
                 padding-right: 1em;
-                margin: 1px;
-                cursor: "pointer";
-                border: none;
-                background:#0ef20c;
-                font-size: 1.02em;
-                font-weight: bold;
+                border-radius:0px;
                 -moz-border-radius:0px;
                 -webkit-border-radius:0px;
-                border-radius:0px;
+            }
 
+            .button.highlight {
+                background:#0ef20c;
+                color: #011101;
+            }
+
+            .button.highlight:hover {
+                background:#0B9EE6;
+                background: #12A611;
+            }
+
+            #close-controls.highlight:hover {
+                background: #12A611;
+                background: #E13418;
+                background: #A62612;
             }
 
             #controls-modal {
@@ -111,19 +135,98 @@
                 left:50%;
             }
 
+            #menu {
+                top: 0.1em;
+                left: 0.5em;
+                position: absolute;
+                width: 100%;
+            }
+            
+            #menu button {
+                float: left;
+                margin: 0.4em;
+                margin-right:0.4em;
+                margin-left:0em;
+                padding: 0.3em;
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+                cursor: pointer;
+                background: #011101;
+                border: 1px solid #0ef20c;
+                border: none;
+                background: #0ef20c;
+                color: #0ef20c;
+                color: #011101;
+            }
+
+            #menu button:hover {
+                background: #00F289;
+                background: #4DFFB1;
+                background: #0B9EE6;
+                background: #12A611;
+            }
+
+            #menu button#ersatz-link-button{
+                color: #16A3FC;
+                border: 1px solid #16A3FC;
+                border: none;
+                background: #16A3FC;
+                color: #011101;
+            }
+            
+            #menu button#ersatz-link-button:hover {
+                background: #16A3FC;
+                background: #116CA6;
+            }
+
+            #controls-modal h3 {
+                text-align: center;
+                padding: 0px;
+                margin: 0px;
+                left: 0px;
+                font-size: 1.5em;
+                top: 1em;
+                width: 100%;
+            }
+
             .ocra-text {
                 background-color:none;
-                text-align: center;
                 font-family: "OCRA", "Monospace", "sans-serif";
                 color: #0ef20c;
                 font-weight: bold;
                 line-height: 1.5em;
+            }
+
+            #close-button-div {
+                width: 100%;
+                text-align: left;
+            }
+
+            .close-button {
+                cursor: pointer;
+                padding: 0.4em;
+                padding-left: 0.8em;
+                padding-right: 0.7em;
+                font-size: 1.2em;
+                text-align: center;
+                top: 1em;
+                right: 1em;
+            }
+
+            hr {
+                color: #0ef20c;
+                background-color: #0ef20c;
+            }
+
+            hr.hrmod { border: solid #0ef20c; border-width: 1px 0 0; clear: both; margin: 22px 0 21px; height: 0; }
+
+            .panel {
+                text-align: center;
                 position: absolute;
                 padding: 0px;
                 margin: 0px;
                 padding-left: 5px;
                 padding-right: 5px;
-                opacity: 0.8;
             }
 
             #stats #fps #fpsText {
@@ -152,14 +255,10 @@
             }
 
             .ocra-text a{
-                color:white;
-                color: #168BF2;
                 color:#16A3FC;
             }
 
             #footer a:visited{
-                color:white;
-                color: #168BF2;
                 color:#16A3FC;
             }
 
@@ -182,71 +281,88 @@
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
     </head>
     <body>
-        <!--
         <div id="controls-modal-wrapper">
         <div id="controls-modal">
-            <h3>Controls</h4>
-            <table>
+            <div id="close-button-div">
+                <button id="close-controls" class="close-button button ocra-text highlight">X</button>
+            </div>
+            <h3 class="header ocra-text">Wordcloud Controls</h3>
+            <table class="ocra-text">
               <tr>
-                <th>Action</th>
-                <th>Button</td>
+                <th colspan="3"><hr class="hrmod"></th>
               </tr>
-              <tr>
-                <th>Forward</th>
-                <td>W</td>
-              </tr>
-              <tr>
-                <th>Backward</th>
-                <td>S</td>
-              </tr>
-              <tr>
-                <th>Left</th>
-                <td>A</td>
-              </tr>
-              <tr>
-                <th>Right</th>
-                <td>D</td>
-              </tr>
-              <tr>
-                <th>Up</th>
-                <td>E</td>
-              </tr>
-              <tr>
-                <th>Down</th>
-                <td>Q</td>
-              </tr>
-              <tr>
-                <th>Move to Word</th>
-                <td>Left Click a Word </td>
+                <tr>
+                <th>Fly to Word</th>
+                <th>&nbsp;</th>
+                <th>Left Click on Word </th>
               </tr>
               <tr>
                 <th>Rotate Camera</th>
-                <td>Hold Right Click and Move Mouse</td>
+                <th>&nbsp;</th>
+                <th>Hold Right Click + Move Mouse</th>
               </tr>
               <tr>
                 <th>Zoom Camera</th>
-                <td>Scroll Wheel</td>
+                <th>&nbsp;</th>
+                <th>Mouse Scroll Wheel</th>
               </tr>
+              <tr>
+                <th colspan=3><hr class="hrmod"></th>
+              </tr>
+              <tr>
+                <th>Forward</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>W</th>
+              </tr>
+              <tr>
+                <th>Backward</th>
+                <th>&nbsp;</th>
+                <th>S</th>
+              </tr>
+              <tr>
+                <th>Left</th>
+                <th>&nbsp;</th>
+                <th>A</th>
+              </tr>
+              <tr>
+                <th>Right</th>
+                <th>&nbsp;</th>
+                <th>D</th>
+              </tr>
+              <tr>
+                <th>Up</th>
+                <th>&nbsp;</th>
+                <th>E</th>
+              </tr>
+              <tr>
+                <th>Down</th>
+                <th>&nbsp;</th>
+                <th>Q</th>
+              </tr>
+              
             </table>
-            <input class="button search" value="Ok" />
         </div>
         </div>
-        -->
         <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-        <div id="ersatz-demos" class="ocra-text">
-            <p><a href="http://www.ersatzlabs.com/demos/#techdemos">&lt; Ersatz Labs Demos</a></p>
+        <div id="menu">
+            <form id="ersatz-link" action="http://www.ersatzlabs.com/demos/#techdemos">
+                <button id="ersatz-link-button" class="ocra-text button">&lt; Ersatz Labs Demos</button>
+            </form>
+            <button id="toggle-controls" class="ocra-text button">Controls</button>
         </div>
-        <div id="header" class="ocra-text">
+        <!--
+        <div id="header" class="ocra-text panel">
             <p>Click on a word to fly to it.<br /> 
                WASDQE keys to move freely.<br /> 
                Right click and drag to rotate.
             </p>
         </div>
+        -->
         <div id="typetonav">
-            <input id="typetonav_input" type="text" placeholder="Enter Target Word"></input>
-            <button onclick="instance.controls.wordnav()" class="button search orange small">Search</button>
+            <input id="typetonav_input" class="ocra-text" type="text" placeholder="Enter Target Word"></input>
+            <button id="typetonav-button" onclick="instance.controls.wordnav()" class="ocra-text button highlight">Search</button>
         </div>
-        <div id='footer' class="ocra-text">
+        <div id='footer' class="ocra-text panel">
             <p>Created by the team at <a target='_blank' href='http://ersatz1.com'>Ersatz Labs</a><br />
                Read more about <a target='_blank' href='http://homepage.tudelft.nl/19j49/t-SNE.html'>t-SNE</a>  
            </p>
@@ -254,6 +370,22 @@
         <script>
             var instance = new WordCloud.App({container:"ThreeJS"});
             instance.start();
+
+            $("#typetonav_input").focus(function() {
+                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Enter Target Word")
+            });
+
+            $("#typetonav_input").change(function() {
+                $("#typetonav_input").removeClass("word-not-found").attr('placeholder', "Enter Target Word")
+            });
+            
+            $("#close-controls").click(function() {
+                $("#controls-modal-wrapper").hide();
+            });
+
+            $("#toggle-controls").click(function() {
+                $("#controls-modal-wrapper").toggle();
+            });
         </script>
     </body>
 </html>

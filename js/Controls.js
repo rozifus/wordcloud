@@ -318,6 +318,7 @@ WordCloud.Controls = function ( opts ) {
                 break;
             }
         }
+        typetonav_input.value = '';
         if (success_flag) {
             var new_position = new THREE.Vector3(wv_coord[0] * config.SCALE_OUT + (targetword.length * config.FONT_SIZE * 0.5),
                                                  wv_coord[1] * config.SCALE_OUT,
@@ -340,9 +341,8 @@ WordCloud.Controls = function ( opts ) {
             //controls.center = new_lookat;
             typetonav_input.blur();
         } else {
-            alert("Word not found");
+            $("#typetonav_input").attr('placeholder', "Word Not Found").addClass("word-not-found");
         }
-        typetonav_input.value = '';
     }
 
     function onMouseDown( event ) {
